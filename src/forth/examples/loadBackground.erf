@@ -1,0 +1,8 @@
+0
+23
+ERAPI_LoadSystemBackground
+ERAPI_FadeIn
+begin
+    halt
+    1
+until
