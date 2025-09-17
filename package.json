@@ -1,0 +1,16 @@
+{
+  "name": "ereader-erf",
+  "version": "0.0.0",
+  "repository": "git@github.com:city41/ereader-erf.git",
+  "license": "MIT",
+  "dependencies": {
+    "@types/jest": "^30.0.0",
+    "jest": "^30.1.3",
+    "ts-jest": "^29.4.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  },
+  "scripts": {
+    "test": "yarn jest"
+  }
+}
