@@ -28,7 +28,7 @@ function isCallbacks(v: any): v is Callbacks {
 
 class MissingWordError extends Error {
   constructor(word: string) {
-    super(word + "?");
+    super("Unknown symbol: " + word);
   }
 }
 

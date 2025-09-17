@@ -1,33 +1,63 @@
 import { Forth } from "../../../src//easyforth/forth";
+import { AnyFunction } from "../../../src/easyforth/types";
 
 describe("Forth", function () {
-  it("should do a simple calculation", function () {
-    const next = () => {};
+  function createInterpreter() {
     const output: string[] = [];
     const outputCallback = (o: string) => {
-      output.push(o);
+      if (o !== undefined) {
+        output.push(o.toString().trim());
+      }
     };
     const lines: string[] = [];
     const lineCallback = (l: string) => {
       lines.push(l);
     };
 
-    const forth = new Forth(next);
-    forth.readLines(["3", "4", "+", "."], {
-      outputCallback,
-      lineCallback,
-    });
+    const forth = new Forth(() => {});
 
-    // TODO: what are the undefineds?
-    expect(output).toEqual([
-      undefined,
-      " ok",
-      undefined,
-      " ok",
-      undefined,
-      " ok",
-      "7 ",
-      " ok",
-    ]);
+    function readLines(lines: string[], next?: AnyFunction) {
+      forth.readLines(
+        lines,
+        {
+          outputCallback,
+          lineCallback,
+        },
+        next
+      );
+    }
+
+    return { readLines, output, lines };
+  }
+
+  it("should do a simple calculation", function (done) {
+    const { output, lines, readLines } = createInterpreter();
+
+    const inputLines = ["3", "4", "+", "."];
+
+    readLines(inputLines, function () {
+      expect(output).toEqual(["ok", "ok", "ok", "7", "ok"]);
+      done();
+    });
+  });
+
+  it("should support functions", function (done) {
+    const { output, readLines } = createInterpreter();
+
+    const lines = [": foo 3 + ; 2 foo ."];
+    readLines(lines, function () {
+      expect(output).toEqual(["", "5", "ok"]);
+      done();
+    });
+  });
+
+  it("should support do loops", function (done) {
+    const { output, readLines } = createInterpreter();
+
+    const lines = [": loop-test 3 0 do i . loop ;", "loop-test"];
+    readLines(lines, function () {
+      expect(output).toEqual(["", "ok", "0", "1", "2", "ok"]);
+      done();
+    });
   });
 });

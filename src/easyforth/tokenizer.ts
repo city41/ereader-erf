@@ -16,7 +16,10 @@ export class Tokenizer {
   }
 
   skipWhitespace() {
-    while (whitespace.test(this.input[this.index]) && this.index < length) {
+    while (
+      whitespace.test(this.input[this.index]) &&
+      this.index < this.length
+    ) {
       this.index++;
     }
   }
