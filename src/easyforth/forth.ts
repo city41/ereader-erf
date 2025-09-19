@@ -150,6 +150,7 @@ export class Forth {
     action: Action,
     next: AnyFunction
   ) {
+    console.log("action.code", action.code);
     switch (action.code) {
       case "variable":
         this.createVariable(tokenizer.requiredNextToken().value);
@@ -163,6 +164,9 @@ export class Forth {
       case ":":
         this.startDefinition(tokenizer.requiredNextToken().value);
         break;
+      case "do": {
+        debugger;
+      }
       default:
         if (action.length == 2) {
           // has next callback

@@ -1,8 +1,9 @@
 0
 23
 ERAPI_LoadSystemBackground
+1
 ERAPI_FadeIn
 begin
-    halt
     1
+    halt
 until

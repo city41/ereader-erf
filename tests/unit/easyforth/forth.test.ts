@@ -51,12 +51,22 @@ describe("Forth", function () {
     });
   });
 
-  it("should support do loops", function (done) {
+  it("should support do loops in a function", function (done) {
     const { output, readLines } = createInterpreter();
 
     const lines = [": loop-test 3 0 do i . loop ;", "loop-test"];
     readLines(lines, function () {
       expect(output).toEqual(["", "ok", "0", "1", "2", "ok"]);
+      done();
+    });
+  });
+
+  it.only("should support do loops directly", function (done) {
+    const { output, readLines } = createInterpreter();
+
+    const lines = ["3 0 do i . loop"];
+    readLines(lines, function () {
+      expect(output).toEqual(["0", "1", "2", "ok"]);
       done();
     });
   });
